@@ -8,20 +8,22 @@ This repository contains the Unix/HPC pipeline scripts and R scripts used for re
 
 Scripts are organized into two top-level folders, each with numbered subfolders corresponding to the same analysis stages:
 
+```
 unix_scripts/
-├── 01_preprocessing/ # Read QC, trimming, host/contaminant removal
-├── 02_assembly/ # De novo metagenomic assembly
-├── 03_bin_classification/ # Contig binning, MAG quality assessment, taxonomic classification
-├── 04_taxonomic_profiling/ # MetaPhlAn4 species-level profiling
-├── 05_functional_profiling/ # HUMAnN3 pathway profiling
-├── 06_strain_profiling/ # StrainPhlAn4 strain-level phylogenies
-└── 07_downstream_analysis/ # Supporting HPC/command-line steps for downstream analyses
+├── 01_preprocessing/         # Read QC, trimming, host/contaminant removal
+├── 02_assembly/              # De novo metagenomic assembly
+├── 03_bin_classification/    # Contig binning, MAG quality assessment, taxonomic classification
+├── 04_taxonomic_profiling/   # MetaPhlAn4 species-level profiling
+├── 05_functional_profiling/  # HUMAnN3 pathway profiling
+├── 06_strain_profiling/      # StrainPhlAn4 strain-level phylogenies
+└── 07_downstream_analysis/   # Supporting HPC/command-line steps for downstream analyses
 
 r_scripts/
-├── 04_taxonomic_profiling/ # Taxonomic composition and diversity analyses (MetaPhlAn4 output)
-├── 05_functional_profiling/ # Functional pathway analyses (HUMAnN3 output)
-├── 06_strain_profiling/ # Strain-level distance and clustering analyses (StrainPhlAn4 output)
-└── 07_downstream_analysis/ # Statistical analyses and figure generation
+├── 04_taxonomic_profiling/   # Taxonomic composition and diversity analyses (MetaPhlAn4 output)
+├── 05_functional_profiling/  # Functional pathway analyses (HUMAnN3 output)
+├── 06_strain_profiling/      # Strain-level distance and clustering analyses (StrainPhlAn4 output)
+└── 07_downstream_analysis/   # Statistical analyses and figure generation
+```
 
 Numbering follows the order of the Bioinformatics Analysis and Statistical Analysis sections of the manuscript (Methods, sections 6.1–6.4).
 
@@ -45,7 +47,7 @@ Numbering follows the order of the Bioinformatics Analysis and Statistical Analy
 | Diversity/ordination analyses | vegan | v2.7-2 |
 | Statistical tests/plots | ggpubr | v0.6.2 |
 | Phylogenetic distance/PCoA | ape | v5.8-1 |
-| Post hoc testing | rstatix | v1.1.0 |
+| Post hoc testing | rstatix | 1.1.0 |
 | Data visualization | ggplot2 | v4.0.0 |
 
 Exact parameters and command-line options for each step are described in the manuscript Methods (Bioinformatics Analysis; Statistical Analysis and Data Visualization).
