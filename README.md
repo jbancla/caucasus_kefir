@@ -47,7 +47,7 @@ Numbering follows the order of the Bioinformatics Analysis and Statistical Analy
 | Diversity/ordination analyses | vegan | v2.7-2 |
 | Statistical tests/plots | ggpubr | v0.6.2 |
 | Phylogenetic distance/PCoA | ape | v5.8-1 |
-| Post hoc testing | rstatix | 1.1.0 |
+| Post hoc testing | rstatix | v1.1.0 |
 | Data visualization | ggplot2 | v4.0.0 |
 
 Exact parameters and command-line options for each step are described in the manuscript Methods (Bioinformatics Analysis; Statistical Analysis and Data Visualization).
