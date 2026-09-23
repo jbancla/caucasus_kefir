@@ -1,27 +1,27 @@
 ############################################################################################################################################################
 CoverM script for read alignment statistics in metagenomics
 ############################################################################################################################################################
-cd /data/Food/analysis/R1838_DOMINO/joseph_ancla/domino_files/mk_caucasus/scripts/07_downstream_analysis
-nano 7.4_coverm_hq_mags.sh 
-############################################################################################################################################################
 
 #!/bin/sh
-#SBATCH --job-name=coverm_HQ
-#SBATCH --error=7.4_coverm_hq_mags.err
-#SBATCH --output=7.4_coverm_hq_mags.out
+#SBATCH --job-name=covermHQbam
+#SBATCH --error=7.7_coverm_hq_mags_relab_bam_cache.err
+#SBATCH --output=7.7_coverm_hq_mags_relab_bam_cache.out
 #SBATCH -p Priority,Background,GPU
 #SBATCH -n 1
-#SBATCH --cpus-per-task=25
+#SBATCH --cpus-per-task=40
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH --mail-user=Joseph.Ancla@teagasc.ie
+
+# STEP 2 (rerun): Perform coverage calculation using coverm, this time caching BAM files.
 
 # Define clean reads, MAGs, and output directories.
 clean_reads="/data/Food/analysis/R1838_DOMINO/joseph_ancla/domino_files/mk_caucasus/01_preprocessing/clean_reads"
 mag_dir="/data/Food/analysis/R1838_DOMINO/joseph_ancla/domino_files/mk_caucasus/03_bin_classification/mags/hq_mags"
-out_dir="/data/Food/analysis/R1838_DOMINO/joseph_ancla/domino_files/mk_caucasus/07_downstream_analysis/7.4_coverm"
+out_dir="/data/Food/analysis/R1838_DOMINO/joseph_ancla/domino_files/mk_caucasus/07_downstream_analysis/7.7_coverm/hq_mags_relab_bam_cache"
 
 # Create necessary directories.
-mkdir -p "$out_dir"/hq_mags
+mkdir -p "$out_dir"/hq_mags_relab
+mkdir -p "$out_dir"/bam_cache
 
 # Load coverm tool.
 module load anaconda/3.10
@@ -44,24 +44,31 @@ for sample_dir in "${clean_reads}"/*; do
 
     echo "[RUN] ${sample_name}"
 
-    # Run coverm script.
+    # Create a per-sample subdirectory for the cached BAM so file names don't collide across samples.
+    sample_bam_dir="${out_dir}/bam_cache/${sample_name}"
+    mkdir -p "${sample_bam_dir}"
+
+    # Run coverm script (identical parameters to 7.6, plus BAM caching).
     coverm genome \
-	    -1 "${r1}" \
-	    -2 "${r2}" \
-	    --genome-fasta-directory "${mag_dir}" \
-	    --threads "$SLURM_CPUS_PER_TASK" \
-	    --min-read-percent-identity 95 \
-	    --min-read-aligned-percent 75 \
-	    --methods mean covered_bases length rpkm \
-	    --genome-fasta-extension fa \
-	    -o "${out_dir}/hq_mags/${sample_name}_mag_coverage.tsv"
+    -1 "${r1}" \
+    -2 "${r2}" \
+    --genome-fasta-directory "${mag_dir}" \
+    --threads "$SLURM_CPUS_PER_TASK" \
+    --min-read-percent-identity 95 \
+    --min-read-aligned-percent 75 \
+    --methods mean covered_bases rpkm relative_abundance \
+    --genome-fasta-extension fa \
+    --bam-file-cache-directory "${sample_bam_dir}" \
+    -o "${out_dir}/hq_mags_relab/${sample_name}_mag_coverage_relab.tsv"
 
 done # End of sample_dir loop.
 
-echo "[DONE] Outputs in: ${out_dir}/hq_mags"
+echo "[DONE] Relative abundance outputs in: ${out_dir}/hq_mags_relab"
+echo "[DONE] Cached BAM files in: ${out_dir}/bam_cache/<sample_name>/"
 
 # Unload coverm tool.
 conda deactivate
 module unload anaconda/3.10
 
 ############################################################################################################################################################
+- END -
