@@ -1,8 +1,5 @@
 ############################################################################################################################################################
-MetaWRAP script for assembly, binning, bin refinement, and reassembly of clean reads
-############################################################################################################################################################
-cd /data/Food/analysis/R1838_DOMINO/joseph_ancla/domino_files/mk_caucasus/scripts/03_bin_classification
-nano 3.1_metawrap_metaspades_9005.sh 
+MetaWRAP script for binning, bin refinement, and reassembly of assembled contigs
 ############################################################################################################################################################
 
 #!/bin/sh
@@ -72,45 +69,4 @@ done
 module unload metawrap/1.3.2env
 
 ############################################################################################################################################################
-Script for copying and renaming MAGs from metawrap reassembled_bins
-############################################################################################################################################################
-cd /data/Food/analysis/R1838_DOMINO/joseph_ancla/domino_files/mk_caucasus/scripts/03_bin_classification
-nano 3.1_metawrap_9005_rename.sh 
-############################################################################################################################################################
-
-#!/bin/sh
-#SBATCH --job-name=cpmv9005
-#SBATCH --error=3.1_metawrap_9005_rename.err
-#SBATCH --output=3.1_metawrap_9005_rename.out
-#SBATCH -p Priority,Background,GPU
-#SBATCH -n 1
-#SBATCH --cpus-per-task=2
-#SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH --mail-user=Joseph.Ancla@teagasc.ie
-
-# Define samples, input, and output directories.
-samples="/data/Food/analysis/R1838_DOMINO/joseph_ancla/domino_files/mk_caucasus/filenames.txt"
-in_dir="/data/Food/analysis/R1838_DOMINO/joseph_ancla/domino_files/mk_caucasus/03_bin_classification/3.1_metawrap_9005"
-out_dir="/data/Food/analysis/R1838_DOMINO/joseph_ancla/domino_files/mk_caucasus/03_bin_classification/hq_mags"
-
-for x in $(cat "$samples"); do
-
-mkdir -p "${out_dir}/${x}"
-
-    echo "Started copying bins from sample $x"
-
-    cp "${in_dir}/${x}"/BIN_REASSEMBLY/reassembled_bins/* "${out_dir}/${x}"
-
-    echo "Done copying bins from sample $x, now renaming."
-
-    for file in "${out_dir}/${x}"/*.fa; do
-        base=$(basename "$file")
-        mv ${out_dir}/${x}/${base} ${out_dir}/${x}/${x}_${base}
-
-    done
-
-    echo "Done renaming bins in $x, proceeding to the next sample."
-
-done
-
-############################################################################################################################################################
+- END -
