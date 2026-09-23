@@ -1,8 +1,5 @@
 ############################################################################################################################################################
-GTDBTk script for taxonomic classifications to bacterial and archaeal genomes based on the Genome Database Taxonomy (GTDB)
-############################################################################################################################################################
-cd /data/Food/analysis/R1838_DOMINO/joseph_ancla/domino_files/mk_caucasus/scripts/07_downstream_analysis
-nano 7.1_gtdbtk_hq_mags.sh 
+GTDB-Tk script for taxonomic classifications to bacterial and archaeal genomes based on the Genome Database Taxonomy (GTDB)
 ############################################################################################################################################################
 
 #!/bin/sh
@@ -45,3 +42,4 @@ conda deactivate
 module unload gtdbtk/2.4.0
 
 ############################################################################################################################################################
+- END -
