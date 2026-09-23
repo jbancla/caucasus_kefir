@@ -1,8 +1,5 @@
 ############################################################################################################################################################
-Abricate script for mass screening of contigs for antibiotic resistance and virulence genes
-############################################################################################################################################################
-cd /data/Food/analysis/R1838_DOMINO/joseph_ancla/domino_files/mk_caucasus/scripts/07_downstream_analysis
-nano 7.3_abricate_hq_mags.sh 
+ABRicate script for mass screening of contigs for antibiotic resistance and virulence genes
 ############################################################################################################################################################
 
 #!/bin/sh
@@ -61,3 +58,4 @@ conda deactivate
 module unload anaconda/3.10
 
 ############################################################################################################################################################
+- END -
